@@ -32,25 +32,19 @@
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Grid.Column="0" Margin="12,0,12,0">
             <StackPanel Orientation="Vertical" Margin="0,0,0,0">
-                <toolkit:ToggleSwitch IsChecked="{Binding IsDevMode}" x:Name="urlSelector" Unchecked="urlSelector_Unchecked" Checked="urlSelector_Checked" Header="DevFeatures" Width="440" Margin="0,0,0,0" Padding="0,0,0,0"/>
+
+                
                 <StackPanel Margin="12,0,0,0">
-                    <TextBlock Text="Url" Padding="6,0,0,0" Foreground="{StaticResource PhoneSubtleBrush}" />
-                    <TextBox x:Name="urlInput" Text="{Binding Url}" SelectionChanged="urlInput_SelectionChanged" />
+                    <TextBlock Text="Grt Number" Padding="6,0,0,0" Foreground="{StaticResource PhoneSubtleBrush}" />
+                    <TextBox x:Name="contactInput" SelectionChanged="contactInput_SelectionChanged" Text="{Binding ContactNumber}" InputScope="TelephoneNumber" >
+                    </TextBox>
                 </StackPanel>
+                <Button x:Name="addToContacts" Content="Add GRT to Contacts" Click="addToContacts_Click" />
+                <Button x:Name="clearFavourites" Click="clearFavourites_Click" Content="Clear Favourites" />
+                
             </StackPanel>
         </Grid>
     </Grid>
- 
-    <!--Sample code showing usage of ApplicationBar-->
-    <!--<phone:PhoneApplicationPage.ApplicationBar>
-        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
-            <shell:ApplicationBarIconButton IconUri="/Images/appbar_button1.png" Text="Button 1"/>
-            <shell:ApplicationBarIconButton IconUri="/Images/appbar_button2.png" Text="Button 2"/>
-            <shell:ApplicationBar.MenuItems>
-                <shell:ApplicationBarMenuItem Text="MenuItem 1"/>
-                <shell:ApplicationBarMenuItem Text="MenuItem 2"/>
-            </shell:ApplicationBar.MenuItems>
-        </shell:ApplicationBar>
-    </phone:PhoneApplicationPage.ApplicationBar>-->
+
 
 </phone:PhoneApplicationPage>

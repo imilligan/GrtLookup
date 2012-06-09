@@ -25,7 +25,6 @@ namespace GRTLookup
 
         private GeoCoordinateWatcher geoWatch;
         private PinViewModel userPushpin;
-        private Dictionary<long, Stop> stopsOnMap;
        
         // Constructor
         public MainPage()
@@ -34,7 +33,6 @@ namespace GRTLookup
             Loaded += new RoutedEventHandler(MainPage_Loaded);
             stopMap.Loaded += new RoutedEventHandler(stopMap_Loaded);
             App.ViewModel.ConstructTree(); // AllStops = CsvReader.readStopFile(); //getFileStream("stops.txt"));
-            stopsOnMap = new Dictionary<long, Stop>();
             DataContext = App.ViewModel;
 
             stopMap.ZoomLevel = 15;
@@ -157,7 +155,7 @@ namespace GRTLookup
         {
             App.ViewModel.Pins.Clear();
             App.ViewModel.SearchPins.Clear();
-            stopsOnMap.Clear();
+            App.ViewModel.StopsOnMap.Clear();
             if (geoWatch.Status == GeoPositionStatus.Ready)
             {
                 AddUserPushpin();
@@ -192,7 +190,7 @@ namespace GRTLookup
             IEnumerable<Stop> nearStops = App.ViewModel.NearbyStops(location, 10);
             foreach (Stop stop in nearStops)
             {
-                if (!stopsOnMap.ContainsKey(stop.stop_id))
+                if (!App.ViewModel.StopsOnMap.ContainsKey(stop.stop_id))
                 {
                     AddStopToMap(stop);
                 }
@@ -206,13 +204,13 @@ namespace GRTLookup
                 IsFav = App.ViewModel.Favourites.Contains(stop.stop_id)
             };
             App.ViewModel.Pins.Add(pin);
-            if (stopsOnMap.ContainsKey(stop.stop_id))
+            if (App.ViewModel.StopsOnMap.ContainsKey(stop.stop_id))
             {
-                stopsOnMap[stop.stop_id] = stop;
+                App.ViewModel.StopsOnMap[stop.stop_id] = stop;
             }
             else
             {
-                stopsOnMap.Add(stop.stop_id, stop);
+                App.ViewModel.StopsOnMap.Add(stop.stop_id, stop);
             }
         }
         #endregion        

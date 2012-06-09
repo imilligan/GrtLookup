@@ -39,6 +39,18 @@ namespace GRTLookup.ViewModel
                 NotifyPropertyChanged("IsLoading");
             }
         }
+        private Dictionary<long, Stop> stopsOnMap;
+        public Dictionary<long, Stop> StopsOnMap
+        {
+           get
+            {
+                if (stopsOnMap == null)
+                {
+                    stopsOnMap = new Dictionary<long, Stop>();
+                }
+                return stopsOnMap;
+            } 
+        }
 
         private SettingsViewModel settingViewModel;
         public SettingsViewModel SettingViewModel
@@ -129,7 +141,7 @@ namespace GRTLookup.ViewModel
             };
         }
 
-        public void saveStops()
+        public void SaveFavourites()
         {
             if (favourites == null)
             {

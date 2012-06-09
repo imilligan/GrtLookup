@@ -61,7 +61,7 @@ namespace GRTLookup
         {
             SmsComposeTask smsComposeTask = new SmsComposeTask();
 
-            smsComposeTask.To = App.GRT_NUM;
+            smsComposeTask.To = App.Settings.ContactNumber;
             smsComposeTask.Body = App.ViewModel.StopPageModel.CurrentStop.StopId.ToString();
 
             smsComposeTask.Show();

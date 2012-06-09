@@ -38,6 +38,18 @@ namespace GRTLookup.ViewModel
                 NotifyPropertyChanged("Url");
             }
         }
+        public string ContactNumber
+        {
+            get
+            {
+                return App.Settings.ContactNumber;
+            }
+            set
+            {
+                App.Settings.ContactNumber = value;
+                NotifyPropertyChanged("ContactNumber");
+            }
+        }
         #region INotifyPropertyChanged Members
 
         public event PropertyChangedEventHandler PropertyChanged;

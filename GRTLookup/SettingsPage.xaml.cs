@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
+using Microsoft.Phone.Tasks;
 
 namespace GRTLookup
 {
@@ -20,20 +21,29 @@ namespace GRTLookup
             InitializeComponent();
             LayoutRoot.DataContext = App.ViewModel.SettingViewModel;
         }
-
-        private void urlInput_SelectionChanged(object sender, RoutedEventArgs e)
+        
+        private void contactInput_SelectionChanged(object sender, RoutedEventArgs e)
         {
-            App.Settings.Url = urlInput.Text;
+            App.Settings.ContactNumber = ((TextBox)sender).Text;
         }
 
-        private void urlSelector_Unchecked(object sender, RoutedEventArgs e)
+        private void addToContacts_Click(object sender, RoutedEventArgs e)
         {
-            App.Settings.IsDevMode = false;
+            SavePhoneNumberTask saveNumber = new SavePhoneNumberTask();
+            saveNumber.PhoneNumber = App.Settings.ContactNumber;
+
+            saveNumber.Show();
         }
 
-        private void urlSelector_Checked(object sender, RoutedEventArgs e)
+        private void clearFavourites_Click(object sender, RoutedEventArgs e)
         {
-            App.Settings.IsDevMode = true;
+            if (MessageBox.Show("Alert", "Are you sure you wish to delete your favourites?", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+            {
+                App.ViewModel.Favourites.Clear();
+                App.ViewModel.SaveFavourites();
+                App.ViewModel.Pins.Clear();
+                App.ViewModel.StopsOnMap.Clear();
+            }
         }
 
 

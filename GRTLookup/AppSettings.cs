@@ -23,12 +23,14 @@ namespace GRTLookup
         const string FavoritesKeyName = "Favorites";
         const string UrlKeyName = "Url";
         const string IsDevModeKeyName = "IsDevMode";
+        const string ContactNumberKeyName = "ContactNumber";
 
 
         // The default value of our settings
         readonly string[] FavoritesDefault = new string[]{};
-        const string UrlDefault = "";
+        const string UrlDefault = "http://107.21.124.170/grtlookup/index.php/";
         readonly bool IsDevModeDefault = false;
+        readonly string ContactNumberDefault = "57555";
 
         /// <summary>
         ///  Constructor that gets the application settings.
@@ -128,6 +130,19 @@ namespace GRTLookup
                 AddOrUpdateValue(IsDevModeKeyName, value);
                 Save();
             }
-        }    
+        }
+
+        public string ContactNumber
+        {
+            get
+            {
+                return (string)GetValueOrDefault(ContactNumberKeyName, ContactNumberDefault);
+            }
+            set
+            {
+                AddOrUpdateValue(ContactNumberKeyName, value);
+                Save();
+            }
+        }
     }
 }
