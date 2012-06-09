@@ -1,0 +1,135 @@
+﻿<phone:PhoneApplicationPage 
+    x:Class="GRTLookup.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:converter="clr-namespace:GRTLookup.Converters"
+    mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    shell:SystemTray.IsVisible="True" xmlns:my="clr-namespace:Microsoft.Phone.Controls.Maps;assembly=Microsoft.Phone.Controls.Maps">
+    <phone:PhoneApplicationPage.Resources>
+        <converter:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+        <converter:VisibilityInverter x:Key="VisibilityInverter"/>
+        <ControlTemplate x:Key="PushpinControlPOI" TargetType="my:Pushpin">
+            <Grid x:Name="ContentGrid">
+                <StackPanel Orientation="Vertical">
+                    <Grid Background="{TemplateBinding Background}"
+                                             HorizontalAlignment="Left"
+                                             MinHeight="31"
+                                             MinWidth="29">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Image MouseLeftButtonUp="Image_MouseLeftButtonUp" Grid.Row="0" Height="36" Width="36" Source="/Images/appbar.compas.rest.png"/>
+                    </Grid>
+                    <Polygon Fill="{TemplateBinding Background}"
+                                      Points="0,0 29,0 0,29"
+                                      Width="29"
+                                      Height="29"
+                                      HorizontalAlignment="Left"/>
+                </StackPanel>
+            </Grid>
+        </ControlTemplate>
+        <!--<ControlTemplate x:Key="PushPinFav" TargetType="my:Pushpin" >
+            <Grid x:Name="ContentGrid" MouseLeftButtonUp="pin_MouseLeftButtonUp" Tag="{TemplateBinding Tag}" >
+                <StackPanel Orientation="Vertical" Tag="{TemplateBinding Tag}">
+                    <Grid Background="{StaticResource PhoneAccentBrush}"
+                                             HorizontalAlignment="Left"
+                                             MinHeight="31"
+                                             MinWidth="29">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Image Grid.Column="0" Height="36" Width="36" Source="/Images/appbar.favs.rest.png"/>
+                        <ContentPresenter HorizontalAlignment="Center" Grid.Column="1"
+                                            Content="{TemplateBinding Content}"
+                                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                                            Margin="6,6,6,6" Tag="{TemplateBinding Tag}" />
+                    </Grid>
+                    <Polygon Fill="{TemplateBinding Background}"
+                                      Points="0,0 29,0 0,29"
+                                      Width="29"
+                                      Height="29"
+                                      HorizontalAlignment="Left"/>
+                </StackPanel>
+            </Grid>
+        </ControlTemplate>-->
+    </phone:PhoneApplicationPage.Resources>
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!--TitlePanel contains the name of the application and page title-->
+        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,12,0,12">
+            <TextBlock x:Name="ApplicationTitle" Text="GRT LOOKUP" Style="{StaticResource PhoneTextNormalStyle}"/>
+        </StackPanel>
+
+        <!--ContentPanel - place additional content here-->
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+            <my:Map Height="716" CredentialsProvider="AjBaEFoS6CYiX7BEiZ4I3F3pT7SzNKjjtkwDU-ipUZtrr4dSzcBQ2vGa4owL03_7" HorizontalAlignment="Left" Name="stopMap" VerticalAlignment="Top" Width="500" ZoomLevel="10" >
+                <my:MapLayer>
+                    <my:MapItemsControl ItemsSource="{Binding SearchPins}">
+                        <my:MapItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <!--<my:Pushpin Tag="{Binding Content}" MouseLeftButtonUp="{Binding OnClick}" Location="{Binding Location}">-->
+                                <my:Pushpin Location="{Binding Location}" Tag="{Binding Content}" Background="{StaticResource PhoneAccentBrush}" MouseLeftButtonUp="Image_MouseLeftButtonUp" >
+                                    <my:Pushpin.Content>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image Visibility="{Binding IsCustomVisibility}" MaxWidth="36" MaxHeight="36" Source="{Binding Source}" VerticalAlignment="Center" />
+                                            <TextBlock Text="{Binding Content}" VerticalAlignment="Center" />
+                                        </StackPanel>
+                                    </my:Pushpin.Content>
+                                </my:Pushpin>
+                            </DataTemplate>
+                        </my:MapItemsControl.ItemTemplate>
+                    </my:MapItemsControl>
+                </my:MapLayer>
+                <my:MapLayer>
+                    <my:MapItemsControl ItemsSource="{Binding Pins}">
+                        <my:MapItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <my:Pushpin Location="{Binding Location}" Tag="{Binding Content}" MouseLeftButtonUp="pin_MouseLeftButtonUp" >
+                                    <my:Pushpin.Content>
+                                        <StackPanel Orientation="Vertical">
+                                        <StackPanel Orientation="Horizontal" Visibility="{Binding IsFavVisibility}" Margin="0,0,6,0">
+                                            <Image MaxWidth="36" MaxHeight="36" Source="/Images/appbar.favs.rest.png" VerticalAlignment="Center" />
+                                            <TextBlock Text="{Binding Content}" VerticalAlignment="Center" />
+                                        </StackPanel>
+                                            <StackPanel Orientation="Horizontal" Visibility="{Binding IsFav, Converter={StaticResource VisibilityInverter}}" Margin="6,0">
+                                            <TextBlock Text="{Binding Content}" VerticalAlignment="Center" />
+                                        </StackPanel>
+                                        </StackPanel>
+                                    </my:Pushpin.Content>
+                                </my:Pushpin>
+                            </DataTemplate>
+                        </my:MapItemsControl.ItemTemplate>
+                    </my:MapItemsControl>
+                </my:MapLayer>
+
+            </my:Map>
+        </Grid>
+        <ProgressBar Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibilityConverter}}" VerticalAlignment="Top" IsIndeterminate="True"/>
+    </Grid>
+
+    <!--Sample code showing usage of ApplicationBar-->
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True" Opacity="0.5">
+            <shell:ApplicationBarIconButton IconUri="/Images/appbar.feature.search.rest.png" x:Name="searchNearby" Click="searchNearby_Click" Text="Get Nearby"/>
+            <shell:ApplicationBarIconButton IconUri="/Images/appbar.minus.rest.png" Text="clear all" x:Name="removePoints" Click="removePoints_Click"/>
+            <shell:ApplicationBar.MenuItems>
+                <shell:ApplicationBarMenuItem Text="settings" x:Name="settingsMenuItem" Click="settingsMenuItem_Click"/>
+            </shell:ApplicationBar.MenuItems>
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
+</phone:PhoneApplicationPage>
