@@ -40,50 +40,35 @@
     </phone:PhoneApplicationPage.Resources>
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent" >
+
         <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
         
-        <controls:Pivot x:Name="stopTimesPivot" Title="{Binding CurrentStop.StopName}">
-            <!--Pivot item one-->
-            <controls:PivotItem x:Name="infoPivotItem" Header="Info">
- 
-       <!--TitlePanel contains the name of the application and page title-->
+        <!--TitlePanel contains the name of the application and page title-->
+        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
+            <TextBlock x:Name="ApplicationTitle" Text="{Binding CurrentStop.StopName}" Style="{StaticResource PhoneTextNormalStyle}"/>
+            <TextBlock x:Name="PageTitle" Text="Info" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+        </StackPanel>
+
         <!--ContentPanel - place additional content here-->
-        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-
-            <my:Map AnimationLevel="None"  Grid.Row="0" CredentialsProvider="AjBaEFoS6CYiX7BEiZ4I3F3pT7SzNKjjtkwDU-ipUZtrr4dSzcBQ2vGa4owL03_7" x:Name="locationMap" IsHitTestVisible="False" Height="260" ZoomLevel="15">
-                <my:Pushpin Location="{Binding CurrentStop.Location}" Content="{Binding CurrentStop.StopId}">
-                    
-                </my:Pushpin>
-            </my:Map>
-
-            </Grid>
-            </controls:PivotItem>
-            <controls:PivotItem x:Name="stopTimesPivotTime" Header="Times">
-                <Grid Margin="0,0,0,12">
-                    
-                <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*" />
+        <Grid x:Name="ContentPanel" Grid.Row="1" Grid.Column="0" Margin="12,0,12,0">
+             <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                    <StackPanel Grid.Row="0">
-                        <TextBlock Margin="12,0,0,6" MouseLeftButtonUp="TextBlock_MouseLeftButtonUp" Text="{Binding DateDisplay}" Visibility="{Binding NotifyOnValidationError=True, Path=ShowDatePicker, Converter={StaticResource VisibilityInverter}}" />
-                        <toolkit:DatePicker x:Name="datePicker" Value="{Binding Mode=OneWay, Path=DateContext}" ValueChanged="datePicker_ValueChanged" Visibility="{Binding NotifyOnValidationError=True, Path=ShowDatePicker, Converter={StaticResource BoolToVisibilityConverter}}"/>
-                    </StackPanel>
-                    <ListBox Template="{StaticResource listBoxTemplate}" x:Name="timeBox" Grid.Row="1" ItemsSource="{Binding StopTimes}" ItemTemplate="{StaticResource ItemTemplate}" Margin="12,6"/>
-                </Grid>
-            </controls:PivotItem>
-            <controls:PivotItem x:Name="routesPivot" Header="Routes">
-                <Grid Margin="0,0,0,12">
-                    
-                </Grid>
-            </controls:PivotItem>
-        </controls:Pivot>
+
+                <my:Map AnimationLevel="None"  Grid.Row="0" CredentialsProvider="AjBaEFoS6CYiX7BEiZ4I3F3pT7SzNKjjtkwDU-ipUZtrr4dSzcBQ2vGa4owL03_7" x:Name="locationMap" IsHitTestVisible="False" Height="260" ZoomLevel="15">
+                    <my:Pushpin Location="{Binding CurrentStop.Location}" Content="{Binding CurrentStop.StopId}">
+
+                    </my:Pushpin>
+                </my:Map>
+
+        </Grid>        
         <ProgressBar Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibilityConverter}}" VerticalAlignment="Top" IsIndeterminate="True"/>
     </Grid>
  
@@ -92,7 +77,7 @@
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
             <shell:ApplicationBarIconButton IconUri="/Images/appbar.mess.rest.png" Text="text stop" x:Name="textStopAppbarButton" Click="textStopAppbarButton_Click"/>
             <shell:ApplicationBarIconButton IconUri="/Images/appbar.favs.addto.rest.png" Text="add" x:Name="addToFavsAppbarButton" Click="addToFavsAppbarButton_Click"/>
-            <shell:ApplicationBarIconButton IconUri="/Images/appbar.calend.rest.png" Text="choose date" x:Name="chooseDate" Click="chooseDate_Click"/>
+            <shell:ApplicationBarIconButton IconUri="/Images/appbar.pin.rest.png" Text="pin" x:Name="pinToStart" Click="pinToStart_Click" />
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
 

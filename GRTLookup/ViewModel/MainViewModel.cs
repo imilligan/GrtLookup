@@ -176,67 +176,6 @@ namespace GRTLookup.ViewModel
 
         #endregion
 
-        #region oldcode
-        //internal IEnumerable<Stop> NearbyStops(System.Device.Location.GeoCoordinate geoCoordinate)
-        //{
-        //    List<StopPair> sortedList = new List<StopPair>(getNearestNum);
-        //    double listMaxDistance = double.MaxValue;
-        //    foreach (Stop stop in allStops)
-        //    {
-        //        double distance = Math.Sqrt(
-        //            (Math.Pow(
-        //                (stop.stop_lat - geoCoordinate.Latitude),
-        //                2))
-        //            + (Math.Pow(
-        //                (stop.stop_lon - geoCoordinate.Longitude)
-        //                , 2)));
-        //        if (distance < listMaxDistance)
-        //        {
-        //            Boolean isInserted = false;
-        //            for (int i = 0; i < sortedList.Count; i++)
-        //            {
-
-        //                if (sortedList[i].distance > distance)
-        //                {
-        //                    sortedList.Insert(i, new StopPair(stop, distance));
-        //                    isInserted = true;
-        //                    if (sortedList.Count > getNearestNum)
-        //                    {
-        //                        sortedList.RemoveAt(getNearestNum);
-        //                    }
-        //                    break;
-        //                }
-        //                if (i == sortedList.Count && sortedList.Count < getNearestNum)
-        //                {
-        //                    sortedList.Insert(sortedList.Count, new StopPair(stop, distance));
-        //                    isInserted = true;
-        //                }
-        //            }
-        //            if (!isInserted && (sortedList.Count < getNearestNum))
-        //            {
-        //                sortedList.Insert(sortedList.Count, new StopPair(stop, distance));
-        //            }
-        //        }
-        //    }
-        //    return from stopPair in sortedList
-        //           select stopPair.stop;
-
-
-        //}
-        //internal bool intersectsWith(GeoCoordinate lowerLeft, GeoCoordinate upperRight, bool isSortOnLong, double latitude, double longitude, bool isRight)
-        //{
-        //    if (isSortOnLong)
-        //    {
-        //        return ((isRight && (upperRight.Longitude > longitude))
-        //                || (!isRight && (lowerLeft.Longitude < longitude)));
-        //    }
-        //    else
-        //    {
-        //        return ((isRight && (upperRight.Latitude > latitude))
-        //            || (!isRight && (lowerLeft.Latitude < latitude)));
-        //    }
-        //}
-        #endregion
         
 
     }

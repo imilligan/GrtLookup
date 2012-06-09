@@ -12,6 +12,8 @@ using GRTLookup.Model;
 using System.ComponentModel;
 using System.Device.Location;
 using System.Windows.Media.Imaging;
+using Microsoft.Phone.Shell;
+using System.Linq;
 
 namespace GRTLookup.ViewModel
 {
@@ -171,6 +173,15 @@ namespace GRTLookup.ViewModel
                 return pinStop.stop_name;
             }
         }
+
+        public bool IsPinned
+        {
+            get
+            {
+                return ShellTile.ActiveTiles.FirstOrDefault(x => x.NavigationUri.ToString().Contains("StopId="+StopId.ToString())) != null;
+            }
+        }
+
         #region INotifyPropertyChanged Members
 
         public event PropertyChangedEventHandler PropertyChanged;

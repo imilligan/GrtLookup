@@ -26,30 +26,19 @@ namespace GRTLookup
             InitializeComponent();
             DataContext = App.ViewModel.StopPageModel;
 
-            LayoutRoot.BindingValidationError += new EventHandler<ValidationErrorEventArgs>(LayoutRoot_BindingValidationError);
-            this.Loaded += new RoutedEventHandler(StopView_Loaded);
             if (App.Settings.IsDevMode)
             {
                 App.ViewModel.StopPageModel.StartScheduleRequest();
             }
             locationMap.Loaded += new RoutedEventHandler(locationMap_Loaded);
             favsManager();
+            SetPin();
 
             locationMap.ZoomLevel = 15;
             GeoCoordinate kwCenter = new GeoCoordinate();
             kwCenter.Latitude = 43.47273;
             kwCenter.Longitude = -80.541218;
             locationMap.Center = kwCenter;
-        }
-
-        void StopView_Loaded(object sender, RoutedEventArgs e)
-        {
-            timeBox.BindingValidationError +=new EventHandler<ValidationErrorEventArgs>(LayoutRoot_BindingValidationError);
-        }
-
-        void LayoutRoot_BindingValidationError(object sender, ValidationErrorEventArgs e)
-        {
-            MessageBox.Show(e.Error.ErrorContent.ToString());
         }
 
         void locationMap_Loaded(object sender, RoutedEventArgs e)
@@ -93,6 +82,11 @@ namespace GRTLookup
                 App.ViewModel.Favourites.Add(App.ViewModel.StopPageModel.CurrentStop.StopId);
                 App.ViewModel.StopPageModel.CurrentStop.IsFav = true;
             }
+        }
+
+        private void SetPin()
+        {
+            ((ApplicationBarIconButton)ApplicationBar.Buttons[2]).IsEnabled = !App.ViewModel.StopPageModel.CurrentStop.IsPinned;
         }
 
         private void addToFavsAppbarButton_Click(object sender, EventArgs e)
@@ -143,5 +137,18 @@ namespace GRTLookup
                 }
             });
         }
+
+        private void pinToStart_Click(object sender, EventArgs e)
+        {   
+
+            
+            StandardTileData NewTileData = new StandardTileData
+             {
+                 BackgroundImage = new Uri("SecondaryTile.png", UriKind.Relative),
+                 Title = App.ViewModel.StopPageModel.CurrentStop.StopName,
+            };
+
+             ShellTile.Create(new Uri("/MainPage.xaml?StopId="+ App.ViewModel.StopPageModel.CurrentStop.StopId.ToString(), UriKind.Relative), NewTileData);
+         }
    }
 }

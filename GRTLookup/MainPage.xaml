@@ -37,31 +37,7 @@
                 </StackPanel>
             </Grid>
         </ControlTemplate>
-        <!--<ControlTemplate x:Key="PushPinFav" TargetType="my:Pushpin" >
-            <Grid x:Name="ContentGrid" MouseLeftButtonUp="pin_MouseLeftButtonUp" Tag="{TemplateBinding Tag}" >
-                <StackPanel Orientation="Vertical" Tag="{TemplateBinding Tag}">
-                    <Grid Background="{StaticResource PhoneAccentBrush}"
-                                             HorizontalAlignment="Left"
-                                             MinHeight="31"
-                                             MinWidth="29">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <Image Grid.Column="0" Height="36" Width="36" Source="/Images/appbar.favs.rest.png"/>
-                        <ContentPresenter HorizontalAlignment="Center" Grid.Column="1"
-                                            Content="{TemplateBinding Content}"
-                                            ContentTemplate="{TemplateBinding ContentTemplate}"
-                                            Margin="6,6,6,6" Tag="{TemplateBinding Tag}" />
-                    </Grid>
-                    <Polygon Fill="{TemplateBinding Background}"
-                                      Points="0,0 29,0 0,29"
-                                      Width="29"
-                                      Height="29"
-                                      HorizontalAlignment="Left"/>
-                </StackPanel>
-            </Grid>
-        </ControlTemplate>-->
+      
     </phone:PhoneApplicationPage.Resources>
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
@@ -76,7 +52,7 @@
         </StackPanel>
 
         <!--ContentPanel - place additional content here-->
-        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="0">
             <my:Map Height="716" CredentialsProvider="AjBaEFoS6CYiX7BEiZ4I3F3pT7SzNKjjtkwDU-ipUZtrr4dSzcBQ2vGa4owL03_7" HorizontalAlignment="Left" Name="stopMap" VerticalAlignment="Top" Width="500" ZoomLevel="10" >
                 <my:MapLayer>
                     <my:MapItemsControl ItemsSource="{Binding SearchPins}">
@@ -126,8 +102,9 @@
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True" Opacity="0.5">
             <shell:ApplicationBarIconButton IconUri="/Images/appbar.feature.search.rest.png" x:Name="searchNearby" Click="searchNearby_Click" Text="Get Nearby"/>
-            <shell:ApplicationBarIconButton IconUri="/Images/appbar.minus.rest.png" Text="clear all" x:Name="removePoints" Click="removePoints_Click"/>
+            <shell:ApplicationBarIconButton IconUri="/Images/appbar.help.rest.png" x:Name="info" Click="info_Click" Text="Info" />
             <shell:ApplicationBar.MenuItems>
+                <shell:ApplicationBarMenuItem Text="clear all map points" x:Name="removePoints" Click="removePoints_Click"/>
                 <shell:ApplicationBarMenuItem Text="settings" x:Name="settingsMenuItem" Click="settingsMenuItem_Click"/>
             </shell:ApplicationBar.MenuItems>
         </shell:ApplicationBar>

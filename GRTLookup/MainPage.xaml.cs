@@ -17,6 +17,7 @@ using Microsoft.Phone.Controls.Maps;
 using System.Device.Location;
 using System.Windows.Media.Imaging;
 using GRTLookup.ViewModel;
+using Microsoft.Phone.Tasks;
 
 namespace GRTLookup
 {
@@ -40,6 +41,21 @@ namespace GRTLookup
             kwCenter.Latitude = 43.47273;
             kwCenter.Longitude = -80.541218;
             stopMap.Center = kwCenter;
+        }
+
+        protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            if (NavigationContext.QueryString.ContainsKey("StopId"))
+            {
+                SmsComposeTask smsComposeTask = new SmsComposeTask();
+
+                smsComposeTask.To = App.Settings.ContactNumber;
+                smsComposeTask.Body = NavigationContext.QueryString["StopId"];
+
+                smsComposeTask.Show();
+            }
+
         }
 
         void stopMap_Loaded(object sender, RoutedEventArgs e)
@@ -71,7 +87,7 @@ namespace GRTLookup
             {
                 IsCustom = true,
                 Location = geo,
-                Source = new BitmapImage(new Uri("/Images/appbar.compas.rest.png", UriKind.Relative))
+                Source = new BitmapImage(new Uri("/Images/poi.rest.png", UriKind.Relative))
             };
             App.ViewModel.SearchPins.Add(pin);
         }
@@ -174,9 +190,10 @@ namespace GRTLookup
         {
             if (userPushpin == null)
             {
-                userPushpin = new PinViewModel("me")
+                userPushpin = new PinViewModel( string.Empty )
                 {
-                    IsCustom = true
+                    IsCustom = true,
+                    Source = new BitmapImage(new Uri("/Images/appbar.compas.rest.png", UriKind.Relative ))
                 };
                 stopMap.Center = geoWatch.Position.Location;
             }
@@ -214,6 +231,11 @@ namespace GRTLookup
             }
         }
         #endregion        
+
+        private void info_Click(object sender, EventArgs e)
+        {
+
+        }
 
         
     }
