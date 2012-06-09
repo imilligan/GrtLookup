@@ -20,7 +20,7 @@ namespace GRTLookup.Model
         public static Stop readStopLine(string line)
         {
             var split = ((String)line).Split(',');
-            if (split.Length != 6)
+            if (split.Length != 7)
             {
                 return null;
             }
@@ -30,8 +30,8 @@ namespace GRTLookup.Model
                 zone_id = tryParseLong(split[1]),
                 stop_lon = double.Parse(split[2]),
                 stop_id = tryParseLong(split[3]),
-                stop_name = split[4],
-                location_type = tryParseInt(split[5])
+                stop_name = split[5],
+                location_type = tryParseInt(split[6])
 
             };
             return retStop;

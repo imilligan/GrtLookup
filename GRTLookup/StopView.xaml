@@ -1,4 +1,4 @@
-﻿<phone:PhoneApplicationPage
+﻿<phone:PhoneApplicationPage xmlns:my1="clr-namespace:Microsoft.Advertising.Mobile.UI;assembly=Microsoft.Advertising.Mobile.UI" 
     xmlns:my="clr-namespace:Microsoft.Phone.Controls.Maps;assembly=Microsoft.Phone.Controls.Maps"
     x:Class="GRTLookup.StopView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -56,17 +56,18 @@
         </StackPanel>
 
         <!--ContentPanel - place additional content here-->
-        <Grid x:Name="ContentPanel" Grid.Row="1" Grid.Column="0" Margin="12,0,12,0">
+        <Grid x:Name="ContentPanel" Grid.Row="1" Grid.Column="0">
              <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
-                <my:Map AnimationLevel="None"  Grid.Row="0" CredentialsProvider="AjBaEFoS6CYiX7BEiZ4I3F3pT7SzNKjjtkwDU-ipUZtrr4dSzcBQ2vGa4owL03_7" x:Name="locationMap" IsHitTestVisible="False" Height="260" ZoomLevel="15">
+                <my:Map Margin="12,0,12,0" AnimationLevel="None"  Grid.Row="0" CredentialsProvider="AjBaEFoS6CYiX7BEiZ4I3F3pT7SzNKjjtkwDU-ipUZtrr4dSzcBQ2vGa4owL03_7" x:Name="locationMap" IsHitTestVisible="False" Height="260" ZoomLevel="15">
                     <my:Pushpin Location="{Binding CurrentStop.Location}" Content="{Binding CurrentStop.StopId}">
 
                     </my:Pushpin>
                 </my:Map>
+            <my1:AdControl AdUnitId="10038312" ApplicationId="843678f0-abd7-406e-b35e-884338275353" Grid.Row="1" VerticalAlignment="Bottom" />
 
         </Grid>        
         <ProgressBar Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibilityConverter}}" VerticalAlignment="Top" IsIndeterminate="True"/>

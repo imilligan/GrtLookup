@@ -234,7 +234,7 @@ namespace GRTLookup
 
         private void info_Click(object sender, EventArgs e)
         {
-
+			NavigationService.Navigate(new Uri("/InfoPage.xaml", UriKind.Relative));
         }
 
         
