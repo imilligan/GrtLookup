@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Deployment xmlns="http://schemas.microsoft.com/windowsphone/2009/deployment" AppPlatformVersion="7.1">
-  <App xmlns="" ProductID="{a935f30f-69d3-4936-9d37-e1028eeee732}" Title="GRTLookup" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="GRTLookup author" Description="Sample description" Publisher="GRTLookup">
+  <App xmlns="" ProductID="{a935f30f-69d3-4936-9d37-e1028eeee732}" Title="GRT Lookup" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="GRTLookup author" Description="Sample description" Publisher="GRTLookup">
     <IconPath IsRelative="true" IsResource="false">Icon.png</IconPath>
     <Capabilities>
       <Capability Name="ID_CAP_GAMERSERVICES" />
@@ -26,7 +26,7 @@
         <TemplateType5>
           <BackgroundImageURI IsRelative="true" IsResource="false">Tile.png</BackgroundImageURI>
           <Count>0</Count>
-          <Title>GRTLookup</Title>
+          <Title>GRT Lookup</Title>
         </TemplateType5>
       </PrimaryToken>
     </Tokens>
