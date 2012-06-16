@@ -50,6 +50,18 @@ namespace GRTLookup.ViewModel
                 NotifyPropertyChanged("ContactNumber");
             }
         }
+        public bool UseLocationServices
+        {
+            get
+            {
+                return App.Settings.UseLocationServices;
+            }
+            set
+            {
+                App.Settings.UseLocationServices = value;
+                NotifyPropertyChanged("UseLocationServices");
+            }
+        }
         #region INotifyPropertyChanged Members
 
         public event PropertyChangedEventHandler PropertyChanged;

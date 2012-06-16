@@ -33,7 +33,6 @@
         <Grid x:Name="ContentPanel" Grid.Row="1" Grid.Column="0" Margin="12,0,12,0">
             <StackPanel Orientation="Vertical" Margin="0,0,0,0">
 
-                
                 <StackPanel Margin="12,0,0,0">
                     <TextBlock Text="Grt Number" Padding="6,0,0,0" Foreground="{StaticResource PhoneSubtleBrush}" />
                     <TextBox x:Name="contactInput" SelectionChanged="contactInput_SelectionChanged" Text="{Binding ContactNumber}" InputScope="TelephoneNumber" >
@@ -41,7 +40,8 @@
                 </StackPanel>
                 <Button x:Name="addToContacts" Content="Add GRT to Contacts" Click="addToContacts_Click" />
                 <Button x:Name="clearFavourites" Click="clearFavourites_Click" Content="Clear Favourites" />
-                
+                <toolkit:ToggleSwitch IsChecked="{Binding UseLocationServices}" x:Name="useLocation" Unchecked="useLocation_Unchecked" Checked="useLocation_Checked" Header="Use Locations Services" Width="440" Margin="0,0,0,0" Padding="0,0,0,0"/>
+                <HyperlinkButton  Content="Privacy statement" x:Name="locationServicesLink" Click="locationServicesLink_Click" HorizontalAlignment="Left" />
             </StackPanel>
         </Grid>
     </Grid>

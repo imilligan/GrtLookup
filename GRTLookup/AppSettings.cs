@@ -24,6 +24,8 @@ namespace GRTLookup
         const string UrlKeyName = "Url";
         const string IsDevModeKeyName = "IsDevMode";
         const string ContactNumberKeyName = "ContactNumber";
+        const string UseLocationServicesKeyName = "UseLocationServices";
+        const string IsFirstLaunchKeyName = "IsFirstLaunch";
 
 
         // The default value of our settings
@@ -31,6 +33,8 @@ namespace GRTLookup
         const string UrlDefault = "http://107.21.124.170/grtlookup/index.php/";
         readonly bool IsDevModeDefault = false;
         readonly string ContactNumberDefault = "57555";
+        readonly bool UseLocationServicesDefault = true;
+        readonly bool IsFirstLaunchDefault = true;
 
         /// <summary>
         ///  Constructor that gets the application settings.
@@ -141,6 +145,30 @@ namespace GRTLookup
             set
             {
                 AddOrUpdateValue(ContactNumberKeyName, value);
+                Save();
+            }
+        }
+        public bool UseLocationServices
+        {
+            get
+            {
+                return (bool)GetValueOrDefault(UseLocationServicesKeyName, UseLocationServicesDefault);
+            }
+            set
+            {
+                AddOrUpdateValue(UseLocationServicesKeyName, value);
+                Save();
+            }
+        }
+        public bool IsFirstLaunch
+        {
+            get
+            {
+                return (bool)GetValueOrDefault(IsFirstLaunchKeyName, IsFirstLaunchDefault);
+            }
+            set
+            {
+                AddOrUpdateValue(IsFirstLaunchKeyName, value);
                 Save();
             }
         }

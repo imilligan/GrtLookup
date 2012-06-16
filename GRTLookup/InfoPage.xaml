@@ -69,7 +69,7 @@
 					</Grid.RowDefinitions>
 					<StackPanel Orientation="Vertical" Width="480" Grid.Row="0" Canvas.ZIndex="1" Grid.RowSpan="2" >
 						<Image Margin="80,0" Source="/Tutorial/RingRoad.PNG" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-						<TextBlock TextWrapping="Wrap" Text="The colored icon represents your location.  Pressing the search button will populate the map with the closest stops to you." HorizontalAlignment="Left" VerticalAlignment="Top" Margin="12,12,0,0"/>
+						<TextBlock TextWrapping="Wrap" Text="The colored icon represents your location.  Pressing the search button will populate the map with the closest stops to you.  If location services are disabled, no icon will be displayed." HorizontalAlignment="Left" VerticalAlignment="Top" Margin="12,12,0,0"/>
 					</StackPanel>
 				</Grid>
 			</controls:PivotItem>
@@ -81,7 +81,7 @@
 					</Grid.RowDefinitions>
 					<StackPanel Orientation="Vertical" Width="480" Grid.Row="0" Canvas.ZIndex="1" Grid.RowSpan="2" >
 						<Image Margin="80,0" Source="/Tutorial/Search.PNG" Stretch="None" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-						<TextBlock TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="12,12,0,0"><Run Text="Press and hold any point on the map to bring up a colored waypoint.  Clicking on this waypoint populates the map with the closest stops to the location you just picked."/><LineBreak/><Run/></TextBlock>
+						<TextBlock TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="12,12,0,0"><Run Text="Press and hold any point on the map to bring up a colored waypoint.  Tapping on this waypoint populates the map with the closest stops to the location you just picked."/><LineBreak/><Run/></TextBlock>
 					</StackPanel>
 				</Grid>
 			</controls:PivotItem>
@@ -93,7 +93,7 @@
 					</Grid.RowDefinitions>
 					<StackPanel Orientation="Vertical" Width="480" Grid.Row="0" Canvas.ZIndex="1" Grid.RowSpan="2" >
 						<Image Margin="80,0" Source="/Tutorial/ClearAll.PNG" Stretch="None" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-						<TextBlock TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="12,12,0,0" Text="To clear all of the points on the map, Click on the app's menu bar."/>
+						<TextBlock TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="12,12,0,0" Text="To clear all of the points on the map, Tap on the app's menu bar."/>
 					</StackPanel>
 				</Grid>
 			</controls:PivotItem>
@@ -105,7 +105,7 @@
 					</Grid.RowDefinitions>
 					<StackPanel Orientation="Vertical" Width="480" Grid.Row="0" Canvas.ZIndex="1" Grid.RowSpan="2" >
 						<Image Margin="80,0" Source="/Tutorial/Info.PNG" Stretch="None" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-						<TextBlock TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="12,12,0,0"><Run Text="Clicking on a stop on the map navigates to the stop info page.  From here you can text the bus stop, add the stop to your favorites, or pin the action of texting the stop right to your start menu."/><LineBreak/><Run/><LineBreak/><Run/></TextBlock>
+						<TextBlock TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="12,12,0,0"><Run Text="Tapping on a stop on the map navigates to the stop info page.  From here you can text the bus stop, add the stop to your favorites, or pin the action of texting the stop right to your start menu."/><LineBreak/><Run/><LineBreak/><Run/></TextBlock>
 					</StackPanel>
 				</Grid>
 			</controls:PivotItem>

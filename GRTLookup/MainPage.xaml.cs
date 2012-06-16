@@ -18,6 +18,7 @@ using System.Device.Location;
 using System.Windows.Media.Imaging;
 using GRTLookup.ViewModel;
 using Microsoft.Phone.Tasks;
+using Microsoft.Phone.Shell;
 
 namespace GRTLookup
 {
@@ -33,7 +34,7 @@ namespace GRTLookup
             InitializeComponent();
             Loaded += new RoutedEventHandler(MainPage_Loaded);
             stopMap.Loaded += new RoutedEventHandler(stopMap_Loaded);
-            App.ViewModel.ConstructTree(); // AllStops = CsvReader.readStopFile(); //getFileStream("stops.txt"));
+            App.ViewModel.ConstructTree(); 
             DataContext = App.ViewModel;
 
             stopMap.ZoomLevel = 15;
@@ -41,6 +42,10 @@ namespace GRTLookup
             kwCenter.Latitude = 43.47273;
             kwCenter.Longitude = -80.541218;
             stopMap.Center = kwCenter;
+
+        }
+        void MainPage_Loaded(object sender, RoutedEventArgs e) {
+            
         }
 
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
@@ -55,26 +60,58 @@ namespace GRTLookup
 
                 smsComposeTask.Show();
             }
+            if (App.Settings.IsFirstLaunch)
+            {
+                if (!(MessageBox.Show(
+                    @"This app uses your phone's location services to help find local stops. At no time is any location data sent to a remote server.  Would you like to enable location services for GRT Lookup?
+GRT Lookup's privacy policy can be found in the app settings",
+  "Location Services", MessageBoxButton.OKCancel) == MessageBoxResult.OK))
+                {
+                    App.Settings.UseLocationServices = false;
+                }
+                App.Settings.IsFirstLaunch = false;
+            }
+            if (App.Settings.UseLocationServices)
+            {
+                ((ApplicationBarIconButton)ApplicationBar.Buttons[0]).IsEnabled = true;
+                if (geoWatch == null)
+                {
+                    geoWatch = new GeoCoordinateWatcher(GeoPositionAccuracy.Default);
+                    geoWatch.MovementThreshold = 20;
+                    geoWatch.StatusChanged += new EventHandler<GeoPositionStatusChangedEventArgs>(geoWatch_StatusChanged);
+                    App.ViewModel.IsLoading = true;
+                    geoWatch.PositionChanged += new EventHandler<GeoPositionChangedEventArgs<GeoCoordinate>>(geoWatch_PositionChanged);
+                }
+                geoWatch.Start();
+                AddUserPushpin();
+            }
+            else if( !App.Settings.UseLocationServices )
+            {
+                ((ApplicationBarIconButton)ApplicationBar.Buttons[0]).IsEnabled = false;
+                if (geoWatch != null)
+                {
+                    geoWatch.Stop();
+                }
+                RemoveUserPushPin();
+            }
+
+        }
+        protected override void OnNavigatedFrom(System.Windows.Navigation.NavigationEventArgs e)
+        {
+            base.OnNavigatedFrom(e);
+            if (geoWatch != null)
+            {
+                geoWatch.PositionChanged -= new EventHandler<GeoPositionChangedEventArgs<GeoCoordinate>>(geoWatch_PositionChanged);
+                geoWatch.StatusChanged -= new EventHandler<GeoPositionStatusChangedEventArgs>(geoWatch_StatusChanged);
+                geoWatch.Stop();
+            }
+
 
         }
 
         void stopMap_Loaded(object sender, RoutedEventArgs e)
         {
             stopMap.Hold += new EventHandler<System.Windows.Input.GestureEventArgs>(stopMap_Hold);
-        }
-
-        void MainPage_Loaded(object sender, RoutedEventArgs e)
-        {
-            if (geoWatch == null)
-            {
-                geoWatch = new GeoCoordinateWatcher(GeoPositionAccuracy.Default);
-                geoWatch.MovementThreshold = 20;
-                geoWatch.StatusChanged += new EventHandler<GeoPositionStatusChangedEventArgs>(geoWatch_StatusChanged);
-                App.ViewModel.IsLoading = true;
-                geoWatch.PositionChanged += new EventHandler<GeoPositionChangedEventArgs<GeoCoordinate>>(geoWatch_PositionChanged);
-            }
-            geoWatch.Start();
-
         }
 
         #region mapEvents
@@ -127,14 +164,7 @@ namespace GRTLookup
         {
             if (geoWatch.Status == GeoPositionStatus.Disabled)
             {
-                if (geoWatch.Permission == GeoPositionPermission.Denied)
-                {
-                    MessageBox.Show("Location services on your device are disabled.");
-                }
-                else
-                {
-                    MessageBox.Show("Location services on your device are not functioning.");
-                }
+                MessageBox.Show("Location services on your device are not functioning.");
                 geoWatch.StatusChanged -= new EventHandler<GeoPositionStatusChangedEventArgs>(geoWatch_StatusChanged);
                 geoWatch.Stop();
             }
@@ -172,7 +202,7 @@ namespace GRTLookup
             App.ViewModel.Pins.Clear();
             App.ViewModel.SearchPins.Clear();
             App.ViewModel.StopsOnMap.Clear();
-            if (geoWatch.Status == GeoPositionStatus.Ready)
+            if ( App.Settings.UseLocationServices && geoWatch.Status == GeoPositionStatus.Ready )
             {
                 AddUserPushpin();
             }
@@ -198,7 +228,18 @@ namespace GRTLookup
                 stopMap.Center = geoWatch.Position.Location;
             }
             userPushpin.Location = geoWatch.Position.Location;
-            App.ViewModel.SearchPins.Add(userPushpin);
+            if (!App.ViewModel.SearchPins.Contains(userPushpin))
+            {
+                App.ViewModel.SearchPins.Add(userPushpin);
+            }
+            
+        }
+        private void RemoveUserPushPin()
+        {
+            if (userPushpin != null)
+            {
+                App.ViewModel.SearchPins.Remove(userPushpin);
+            }
         }
 
         private void AddNearPoints(GeoCoordinate location)
